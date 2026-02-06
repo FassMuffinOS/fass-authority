@@ -1,0 +1,10 @@
+{
+  "authority_binding": {
+    "system": "",
+    "explicit_account_id": "",
+    "token_scope": [],
+    "discovery_disabled": true,
+    "binding_hash": ""
+  }
+}
+

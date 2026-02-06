@@ -1,0 +1,11 @@
+{
+  "intent": "deploy",
+  "system": "cloudflare",
+  "adapter": "cloudflare",
+  "authority_binding": "cloudflare.account.binding.json",
+  "inputs": {
+    "project": "fass-root",
+    "entry": "index.ts"
+  }
+}
+

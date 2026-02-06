@@ -1,0 +1,8 @@
+{
+  "intent_type": "DNS_READ",
+  "zone": "example.com",
+  "record_type": "A",
+  "name": "api",
+  "requested_by": "operator",
+  "timestamp": "2026-02-05T21:10:00Z"
+}

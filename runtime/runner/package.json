@@ -1,0 +1,9 @@
+{
+  "name": "fass-runner",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "fass": "./bin/fass-run.ts"
+  }
+}
+

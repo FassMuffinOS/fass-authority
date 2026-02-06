@@ -1,0 +1,23 @@
+name = "fass-authority-gate"
+main = "src/index.ts"
+compatibility_date = "2026-02-05"
+
+# --- AUTHORITY CONTROLS ---
+usage_model = "unbound"
+
+# --- AUTHORITY EXPOSURE (EXPLICIT, NON-PROXY) ---
+routes = [
+  { pattern = "api.fass.systems/*", zone_name = "fass.systems" }
+]
+
+# Explicitly disable assets, pages, and cron
+[assets]
+directory = ""
+
+[triggers]
+crons = []
+
+# Observability without mutation
+[observability]
+enabled = true
+

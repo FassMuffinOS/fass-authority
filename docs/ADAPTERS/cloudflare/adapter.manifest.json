@@ -1,0 +1,18 @@
+{
+  "adapter": "cloudflare",
+  "version": "1.1.0",
+  "authority": {
+    "account_id": "REQUIRED",
+    "token_env": "CLOUDFLARE_API_TOKEN",
+    "discovery": false
+  },
+  "capabilities": {
+    "workers": ["deploy"],
+    "kv": ["read", "write"],
+    "dns": ["read", "write"],
+    "r2": ["read", "write"],
+    "queues": ["publish"]
+  },
+  "witness_required": true
+}
+

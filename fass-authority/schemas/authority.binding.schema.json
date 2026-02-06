@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["system", "account_id", "binding_type"],
+  "properties": {
+    "system": { "type": "string" },
+    "account_id": { "type": "string" },
+    "binding_type": { "enum": ["explicit"] },
+    "discovery_disabled": { "type": "boolean" }
+  }
+}
+
