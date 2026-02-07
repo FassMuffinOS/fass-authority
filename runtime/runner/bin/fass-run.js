@@ -68,6 +68,7 @@ if (!allowed.includes(intent.operation)) {
 // Execute adapter
 const adapter = ADAPTER_REGISTRY[adapterKey];
   enforceAuthorityPreflight(intent);
+  enforceScopePreflight(intent);
 const result = adapter.execute(intent, binding);
 
 // Write execution witness
@@ -108,5 +109,32 @@ function enforceAuthorityPreflight(intent) {
 
     console.error(JSON.stringify(denial, null, 2));
     process.exit(1);
+  }
+}
+
+// --- ABE-F-01 SCOPE ENFORCEMENT ---
+// Execution MUST be within declared agent scope
+function enforceScopePreflight(intent) {
+  // If scope is declared, it MUST be an array allowlist
+  if (intent.scope !== undefined) {
+    if (!Array.isArray(intent.scope)) {
+      throw new Error("ABE-F-01-SCOPE: scope must be an array");
+    }
+
+    if (!intent.scope.includes(intent.operation)) {
+      const denial = {
+        ok: false,
+        decision: "DENIED",
+        failure: "ABE-F-01-SCOPE",
+        reason: "Operation not permitted by agent scope",
+        adapter: intent.adapter,
+        operation: intent.operation,
+        scope: intent.scope,
+        timestamp: new Date().toISOString()
+      };
+
+      console.error(JSON.stringify(denial, null, 2));
+      process.exit(1);
+    }
   }
 }
