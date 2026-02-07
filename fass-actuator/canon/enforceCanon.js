@@ -13,21 +13,24 @@ function logWitness(record) {
   fs.appendFileSync(
     "canon/WITNESS_LOG.jsonl",
     JSON.stringify(record) + "\n",
-    { encoding: "utf8" }
+    "utf8"
   );
 }
 
 export function enforceCanon() {
   const active = fs.readFileSync("canon/ACTIVE_CANON", "utf8").trim();
+  const hashFile = `canon/${active.replace(".", "_")}.hash`;
 
-  const hashFile =
-    active === "CANON_V1.0"
-      ? "canon/CANON_v1.hash"
-      : active === "CANON_V1.1"
-      ? "canon/CANON_v1_1.hash"
-      : null;
+  if (!fs.existsSync(hashFile)) {
+    logWitness({
+      type: "CANON_CONFIGURATION_ERROR",
+      canon_version: active,
+      timestamp: new Date().toISOString(),
+      enforcer: "fass-actuator",
+      decision: "DENIED",
+      reason: "MISSING_CANON_HASH"
+    });
 
-  if (!hashFile) {
     throw new Error("UNKNOWN_ACTIVE_CANON");
   }
 
