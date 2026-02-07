@@ -166,3 +166,4 @@ dist
 !.env.example
 .wrangler/
 keys/root/root_private.pem
+.DS_Store
