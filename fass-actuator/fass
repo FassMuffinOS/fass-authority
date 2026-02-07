@@ -2,26 +2,74 @@
 set -euo pipefail
 
 CMD="${1:-}"
+ARG="${2:-}"
+
+die() {
+  echo "FASS ERROR: $1"
+  exit 1
+}
+
+require_clean_git() {
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    die "Working tree not clean"
+  fi
+}
 
 case "$CMD" in
+
   status)
     echo "Active Canon:"
     cat canon/ACTIVE_CANON
     ;;
+
   verify)
     node --input-type=module -e "import './index.js'; console.log('CANON OK');"
     ;;
-  witness)
-    SUB="${2:-}"
-    if [ "$SUB" = "tail" ]; then
-      tail -5 canon/WITNESS_LOG.jsonl
-    else
-      echo "Unknown witness command"
-      exit 1
-    fi
+
+  freeze)
+    [ -z "$ARG" ] && die "Usage: fass freeze X.Y"
+
+    VERSION="CANON_V${ARG}"
+    HASH_FILE="canon/${VERSION//./_}.hash"
+
+    echo "→ Verifying canon integrity"
+    node --input-type=module -e "import './index.js';"
+
+    require_clean_git
+
+    echo "→ Freezing $VERSION"
+
+    find docs/CANON -type f -print0 \
+      | sort -z \
+      | xargs -0 sha256sum \
+      | sha256sum \
+      | awk '{print $1}' > "$HASH_FILE"
+
+    git add docs/CANON "$HASH_FILE"
+    git commit -m "$VERSION — freeze canon"
+
+    git tag -a "$VERSION" -m "FASS Canon $VERSION"
+
+    echo "$VERSION" > canon/ACTIVE_CANON
+    git add canon/ACTIVE_CANON
+    git commit -m "Activate $VERSION"
+
+    echo "→ Canon frozen and activated: $VERSION"
     ;;
+
+  witness)
+    SUB="${ARG:-}"
+    case "$SUB" in
+      tail)
+        tail -5 canon/WITNESS_LOG.jsonl
+        ;;
+      *)
+        die "Unknown witness command"
+        ;;
+    esac
+    ;;
+
   *)
-    echo "Unknown fass command"
-    exit 1
+    die "Unknown fass command"
     ;;
 esac
