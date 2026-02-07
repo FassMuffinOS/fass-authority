@@ -1,2 +1,7 @@
 import { DNSAdapter } from "./dns/index.js";
-export const ADAPTER_REGISTRY = { dns: DNSAdapter };
+import { WorkersAdapter } from "./workers/index.js";
+
+export const ADAPTER_REGISTRY = {
+  dns: DNSAdapter,
+  workers: WorkersAdapter
+};

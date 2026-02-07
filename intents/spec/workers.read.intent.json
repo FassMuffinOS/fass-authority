@@ -1,0 +1,5 @@
+{
+  "adapter": "workers",
+  "operation": "WORKER_READ",
+  "worker": "example-worker"
+}
