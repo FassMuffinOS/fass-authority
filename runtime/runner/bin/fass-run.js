@@ -67,6 +67,7 @@ if (!allowed.includes(intent.operation)) {
 
 // Execute adapter
 const adapter = ADAPTER_REGISTRY[adapterKey];
+  enforceAuthorityPreflight(intent);
 const result = adapter.execute(intent, binding);
 
 // Write execution witness
@@ -85,3 +86,27 @@ fs.writeFileSync(out, JSON.stringify(execWitness, null, 2));
 
 // Emit result
 console.log(JSON.stringify(result, null, 2));
+
+// --- ABE-F-01 AUTHORITY PRECHECK ---
+// Execution MUST NOT proceed without verified authority
+function enforceAuthorityPreflight(intent) {
+  if (!intent || !intent.adapter || !intent.operation) {
+    throw new Error("ABE-F-01: malformed intent (missing adapter or operation)");
+  }
+
+  // Explicit authority assertion required
+  if (!intent.authority || intent.authority !== "GRANTED") {
+    const denial = {
+      ok: false,
+      decision: "DENIED",
+      failure: "ABE-F-01",
+      reason: "Execution attempted without verified authority",
+      adapter: intent.adapter,
+      operation: intent.operation,
+      timestamp: new Date().toISOString()
+    };
+
+    console.error(JSON.stringify(denial, null, 2));
+    process.exit(1);
+  }
+}
