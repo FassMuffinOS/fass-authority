@@ -12,3 +12,4 @@ Canonical Status:
 - Derives from Invariant 0
 - Enforced at execution boundary
 - Non-bypassable
+ 
