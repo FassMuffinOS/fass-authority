@@ -1,0 +1,14 @@
+{
+  "adapter": "dns",
+  "provider": "cloudflare",
+  "account_id": "cf-account-uuid",
+  "zones": [
+    {
+      "zone": "example.com",
+      "allowed_operations": ["READ"],
+      "record_types": ["A", "AAAA", "CNAME", "TXT"]
+    }
+  ],
+  "issued_by": "FASS_AUTHORITY_ROOT",
+  "issued_at": "2026-02-05T00:00:00Z"
+}

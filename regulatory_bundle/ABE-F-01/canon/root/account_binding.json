@@ -1,0 +1,17 @@
+{
+  "authority_type": "external_account",
+  "platform": "cloudflare",
+  "account_id": "REPLACE_WITH_ACCOUNT_ID",
+  "resolved_via": "oauth",
+  "resolved_by": "Maurice Nobles",
+  "resolved_at": "2026-02-05T18:30:00Z",
+  "scope": [
+    "workers_scripts",
+    "workers_kv"
+  ],
+  "constraints": {
+    "identity_resolution": "forbidden_post_freeze",
+    "execution_mode": "capability_only"
+  }
+}
+

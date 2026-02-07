@@ -1,0 +1,5 @@
+{
+  "allowed_operations": ["WORKER_READ"],
+  "scope": "cloudflare_workers",
+  "mode": "read_only"
+}
