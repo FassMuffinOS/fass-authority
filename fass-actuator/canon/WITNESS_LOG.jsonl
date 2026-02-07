@@ -1,0 +1,1 @@
+{"type":"CANON_VIOLATION","canon_version":"CANON_V1.1","expected_hash":"7abd3908533a55a66fc0b23c7e67183332036f855890551f33746ac3132aefbb","actual_hash":"5103c4b34161ae762e73a7ee2d1e3e7e4d0a770b7f9cd98d1466854bdc02351d","timestamp":"2026-02-07T22:53:33.199Z","enforcer":"fass-actuator","decision":"DENIED","reason":"CANON_TAMPER_DETECTED"}

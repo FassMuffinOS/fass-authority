@@ -9,6 +9,14 @@ function hashCanonDirectory() {
   return output.trim().split(" ")[0];
 }
 
+function logWitness(record) {
+  fs.appendFileSync(
+    "canon/WITNESS_LOG.jsonl",
+    JSON.stringify(record) + "\n",
+    { encoding: "utf8" }
+  );
+}
+
 export function enforceCanon() {
   const active = fs.readFileSync("canon/ACTIVE_CANON", "utf8").trim();
 
@@ -27,6 +35,17 @@ export function enforceCanon() {
   const actual = hashCanonDirectory();
 
   if (actual !== expected) {
+    logWitness({
+      type: "CANON_VIOLATION",
+      canon_version: active,
+      expected_hash: expected,
+      actual_hash: actual,
+      timestamp: new Date().toISOString(),
+      enforcer: "fass-actuator",
+      decision: "DENIED",
+      reason: "CANON_TAMPER_DETECTED"
+    });
+
     throw new Error("CANON_TAMPER_DETECTED");
   }
 }
