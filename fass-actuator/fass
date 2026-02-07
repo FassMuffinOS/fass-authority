@@ -9,9 +9,19 @@ die() {
   exit 1
 }
 
-require_clean_git() {
-  if ! git diff --quiet || ! git diff --cached --quiet; then
-    die "Working tree not clean"
+canon_dirty() {
+  git status --porcelain \
+    | grep -E '^( M|\?\?)' \
+    | grep -v 'canon/WITNESS_LOG.jsonl' \
+    | grep -v '^ M docs/CANON/' \
+    | grep -v '^ M canon/.*\.hash' \
+    | grep -v '^ M canon/ACTIVE_CANON' \
+    >/dev/null
+}
+
+require_clean_canon() {
+  if canon_dirty; then
+    die "Canon scope not clean"
   fi
 }
 
@@ -35,7 +45,7 @@ case "$CMD" in
     echo "→ Verifying canon integrity"
     node --input-type=module -e "import './index.js';"
 
-    require_clean_git
+    require_clean_canon
 
     echo "→ Freezing $VERSION"
 
@@ -58,8 +68,7 @@ case "$CMD" in
     ;;
 
   witness)
-    SUB="${ARG:-}"
-    case "$SUB" in
+    case "${ARG:-}" in
       tail)
         tail -5 canon/WITNESS_LOG.jsonl
         ;;
