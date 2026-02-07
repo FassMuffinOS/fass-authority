@@ -1,5 +1,4 @@
 import fs from "fs";
-import crypto from "crypto";
 import { execSync } from "child_process";
 
 function hashCanonDirectory() {
@@ -11,7 +10,20 @@ function hashCanonDirectory() {
 }
 
 export function enforceCanon() {
-  const expected = fs.readFileSync("canon/CANON_v1.hash", "utf8").trim();
+  const active = fs.readFileSync("canon/ACTIVE_CANON", "utf8").trim();
+
+  const hashFile =
+    active === "CANON_V1.0"
+      ? "canon/CANON_v1.hash"
+      : active === "CANON_V1.1"
+      ? "canon/CANON_v1_1.hash"
+      : null;
+
+  if (!hashFile) {
+    throw new Error("UNKNOWN_ACTIVE_CANON");
+  }
+
+  const expected = fs.readFileSync(hashFile, "utf8").trim();
   const actual = hashCanonDirectory();
 
   if (actual !== expected) {
