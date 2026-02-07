@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AuthorityEnvelope",
+  "type": "object",
+  "required": ["issuer", "issued_at", "expires_at", "scope", "signature"],
+  "properties": {
+    "issuer": { "type": "string" },
+    "issued_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "signature": { "type": "string" }
+  }
+}

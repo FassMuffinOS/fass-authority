@@ -167,3 +167,9 @@ dist
 .wrangler/
 keys/root/root_private.pem
 .DS_Store
+# local backups
+backups/
+runtime/runner/bin/*.bak*
+
+# local workspace
+FASS/
