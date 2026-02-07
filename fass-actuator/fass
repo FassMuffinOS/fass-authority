@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CMD="${1:-}"
+
+case "$CMD" in
+  status)
+    echo "Active Canon:"
+    cat canon/ACTIVE_CANON
+    ;;
+  verify)
+    node --input-type=module -e "import './index.js'; console.log('CANON OK');"
+    ;;
+  witness)
+    SUB="${2:-}"
+    if [ "$SUB" = "tail" ]; then
+      tail -5 canon/WITNESS_LOG.jsonl
+    else
+      echo "Unknown witness command"
+      exit 1
+    fi
+    ;;
+  *)
+    echo "Unknown fass command"
+    exit 1
+    ;;
+esac
