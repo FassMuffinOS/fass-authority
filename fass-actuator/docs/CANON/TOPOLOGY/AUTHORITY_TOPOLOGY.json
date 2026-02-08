@@ -1,0 +1,49 @@
+{
+  "topology_id": "example.enterprise.v1",
+  "schema": "fass.authority.topology.v1",
+  "canon": {
+    "id": "FASS_CANON",
+    "version": "v1.1",
+    "signed": true
+  },
+  "root_authority": {
+    "id": "ROOT_AUTHORITY",
+    "organization": "ExampleCorp",
+    "canon_ref": "FASS_CANON"
+  },
+  "operational_envelopes": [
+    {
+      "id": "OP_ENV_AI",
+      "domain": "ai_ml",
+      "description": "AI and model execution authority",
+      "parent": "ROOT_AUTHORITY",
+      "shadow_envelope": {
+        "id": "SHADOW_AI",
+        "audience": "auditor",
+        "access": "witness_only"
+      }
+    },
+    {
+      "id": "OP_ENV_CLOUD",
+      "domain": "cloud_infrastructure",
+      "description": "Infrastructure and network authority",
+      "parent": "ROOT_AUTHORITY",
+      "shadow_envelope": {
+        "id": "SHADOW_CLOUD",
+        "audience": "regulator",
+        "access": "witness_only"
+      }
+    },
+    {
+      "id": "OP_ENV_FINANCE",
+      "domain": "finance_identity",
+      "description": "Financial and identity authority",
+      "parent": "ROOT_AUTHORITY",
+      "shadow_envelope": {
+        "id": "SHADOW_FINANCE",
+        "audience": "legal_forensic",
+        "access": "witness_only"
+      }
+    }
+  ]
+}
