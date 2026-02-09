@@ -1,0 +1,13 @@
+Authority Canon v1.1 is frozen.
+
+Included:
+- Actor Descriptor v1
+- Verification Trace Semantics v1
+- Authority Escalation Gates v1
+- Authority Revocation & Temporal Guarantees v1
+
+No execution semantics.
+No inferred authority.
+No retroactive modification.
+
+All future changes require Canon v2 governance.
